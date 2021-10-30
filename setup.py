@@ -49,18 +49,18 @@ if ON_RTD:
 with open(ROOT / 'README.rst', encoding='utf-8') as f:
     README = f.read()
 
-with open(ROOT / 'ForkLink' / '__init__.py', encoding='utf-8') as f:
+with open(ROOT / 'forklink' / '__init__.py', encoding='utf-8') as f:
     VERSION = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE).group(1)
 
 
 setuptools.setup(
     name='ForkLink',
     author='EvieePy',
-    url='https://github.com/EvieePy/ForkLink',
+    url='https://github.com/pieckenst/ForkLink',
     version=VERSION,
     packages=['ForkLink'],
     license='MIT',
-    description='A versatile LavaLink wrapper for discord.py',
+    description='A versatile LavaLink wrapper for discord.py forks',
     long_description=README,
     include_package_data=True,
     install_requires=REQUIREMENTS,

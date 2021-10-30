@@ -10,13 +10,13 @@ class ForklinkMixin:
     """Forklink Mixin class.
 
     .. warning::
-        You must use this class in conjuction with a disnake.py `commands.Cog`.
+        You must use this class in conjuction with a discord.py `commands.Cog`.
 
     Example
     ---------
     .. code:: py
 
-        # ForklinkMixin must be used alongside a disnake.py cog.
+        # ForklinkMixin must be used alongside a discord.py cog.
         class MusicCog(commands.Cog, forklink.ForklinkMixin):
 
             @forklink.forklink.listener()
