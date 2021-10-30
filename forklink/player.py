@@ -281,7 +281,7 @@ class Player:
         Disconnect from a discord Voice Channel.
         """
         guild = self.bot.get_guild(self.guild_id)
-        if not guild and force is True:
+        if not guild and force:
             self.channel_id = None
             return
 
@@ -309,14 +309,13 @@ class Player:
             The position to end the track on in milliseconds. By default this always allows the current
             song to finish playing.
         """
-        if replace or not self.is_playing:
-            self.last_update = 0
-            self.last_position = 0
-            self.position_timestamp = 0
-            self.paused = False
-        else:
+        if not replace and self.is_playing:
             return
 
+        self.last_update = 0
+        self.last_position = 0
+        self.position_timestamp = 0
+        self.paused = False
         no_replace = not replace
 
         if self.current:
@@ -335,7 +334,7 @@ class Player:
 
         await self.node._send(**payload)
 
-        __log__.debug(f'PLAYER | Started playing track:: {str(track)} ({self.channel_id})')
+        __log__.debug(f'PLAYER | Started playing track:: {track} ({self.channel_id})')
 
     async def stop(self) -> None:
         """|coro|
@@ -343,7 +342,10 @@ class Player:
         Stop the Player's currently playing song.
         """
         await self.node._send(op='stop', guildId=str(self.guild_id))
-        __log__.debug(f'PLAYER | Current track stopped:: {str(self.current)} ({self.channel_id})')
+        __log__.debug(
+            f'PLAYER | Current track stopped:: {self.current} ({self.channel_id})'
+        )
+
         self.current = None
 
     async def destroy(self, *, force: bool = False) -> None:

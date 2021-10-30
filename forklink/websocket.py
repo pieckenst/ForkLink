@@ -119,7 +119,7 @@ class WebSocket:
                 self.bot.loop.create_task(self.process_data(msg.json()))
 
     async def process_data(self, data: Dict[str, Any]):
-        op = data.get('op', None)
+        op = data.get('op')
         if not op:
             return
 

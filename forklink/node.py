@@ -162,20 +162,21 @@ class Node:
 
         for attempt in range(5):
             async with self.session.get(f'{self.rest_uri}/loadtracks?identifier={quote(query)}',
-                                        headers={'Authorization': self.password}) as resp:
+                                                headers={'Authorization': self.password}) as resp:
 
-                if not resp.status == 200 and retry_on_failure:
-                    retry = backoff.delay()
+                if resp.status != 200:
+                    if retry_on_failure:
+                        retry = backoff.delay()
 
-                    __log__.info(f'REST | Status code ({resp.status}) while retrieving tracks. '
-                                 f'Attempt {attempt} of 5, retrying in {retry} seconds.')
+                        __log__.info(f'REST | Status code ({resp.status}) while retrieving tracks. '
+                                     f'Attempt {attempt} of 5, retrying in {retry} seconds.')
 
-                    await asyncio.sleep(retry)
-                    continue
+                        await asyncio.sleep(retry)
+                        continue
 
-                elif not resp.status == 200 and not retry_on_failure:
-                    __log__.info(f'REST | Status code ({resp.status}) while retrieving tracks. Not retrying.')
-                    return
+                    else:
+                        __log__.info(f'REST | Status code ({resp.status}) while retrieving tracks. Not retrying.')
+                        return
 
                 data = await resp.json()
 
@@ -186,9 +187,10 @@ class Node:
                 if data['playlistInfo']:
                     return TrackPlaylist(data=data)
 
-                tracks = []
-                for track in data['tracks']:
-                    tracks.append(Track(id_=track['track'], info=track['info']))
+                tracks = [
+                    Track(id_=track['track'], info=track['info'])
+                    for track in data['tracks']
+                ]
 
                 __log__.debug(f'REST | Found <{len(tracks)}> tracks with query <{query}> ({self.__repr__()})')
 
@@ -217,16 +219,15 @@ class Node:
             Decoding and building the track failed.
         """
         async with self.session.get(f'{self.rest_uri}/decodetrack?',
-                                    headers={'Authorization': self.password},
-                                    params={'track': identifier}) as resp:
+                                        headers={'Authorization': self.password},
+                                        params={'track': identifier}) as resp:
             data = await resp.json()
 
-            if not resp.status == 200:
+            if resp.status != 200:
                 raise BuildTrackError(f'Failed to build track. Status: {data["status"]}, Error: {data["error"]}.'
                                       f'Check the identifier is correct and try again.')
 
-            track = Track(id_=identifier, info=data)
-            return track
+            return Track(id_=identifier, info=data)
 
     def get_player(self, guild_id: int) -> Optional[Player]:
         """Retrieve a player object associated with the Node.
@@ -244,7 +245,7 @@ class Node:
 
     async def on_event(self, event) -> None:
         """Function which dispatches events when triggered on the Node."""
-        __log__.info(f'NODE | Event dispatched:: <{str(event)}> ({self.__repr__()})')
+        __log__.info(f'NODE | Event dispatched:: <{event}> ({self.__repr__()})')
         await event.player.hook(event)
 
         if not self.hook:
