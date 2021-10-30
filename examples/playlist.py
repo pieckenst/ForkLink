@@ -111,11 +111,7 @@ class Music(commands.Cog):
             controller.next.set()
 
     def get_controller(self, value: Union[commands.Context, forklink.Player]):
-        if isinstance(value, commands.Context):
-            gid = value.guild.id
-        else:
-            gid = value.guild_id
-
+        gid = value.guild.id if isinstance(value, commands.Context) else value.guild_id
         try:
             controller = self.controllers[gid]
         except KeyError:
@@ -176,7 +172,7 @@ class Music(commands.Cog):
 
         controller = self.get_controller(ctx)
         await controller.queue.put(track)
-        await ctx.send(f'Added {str(track)} to the queue.', delete_after=15)
+        await ctx.send(f'Added {track} to the queue.', delete_after=15)
 
     @commands.command()
     async def pause(self, ctx):
@@ -245,7 +241,7 @@ class Music(commands.Cog):
 
         upcoming = list(itertools.islice(controller.queue._queue, 0, 5))
 
-        fmt = '\n'.join(f'**`{str(song)}`**' for song in upcoming)
+        fmt = '\n'.join(f'**`{song}`**' for song in upcoming)
         embed = discord.Embed(title=f'Upcoming - Next {len(upcoming)}', description=fmt)
 
         await ctx.send(embed=embed)

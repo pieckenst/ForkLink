@@ -59,7 +59,7 @@ class Music(commands.Cog):
         if not player.is_connected:
             await ctx.invoke(self.connect_)
 
-        await ctx.send(f'Added {str(tracks[0])} to the queue.')
+        await ctx.send(f'Added {tracks[0]} to the queue.')
         await player.play(tracks[0])
 
 
