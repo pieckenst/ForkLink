@@ -29,52 +29,55 @@ import re
 
 import setuptools
 
-
 ROOT = pathlib.Path(__file__).parent
-ON_RTD = os.getenv('READTHEDOCS') == 'True'
+ON_RTD = os.getenv("READTHEDOCS") == "True"
 
 
-with open(ROOT / 'requirements.txt', encoding='utf-8') as f:
+with open(ROOT / "requirements.txt", encoding="utf-8") as f:
     REQUIREMENTS = f.readlines()
 
 if ON_RTD:
-    REQUIREMENTS.extend((
-        'pygments',
-        'sphinx==1.7.4',
-        'sphinxcontrib-asyncio',
-        'sphinxcontrib-napoleon',
-        'sphinxcontrib-websupport',
-    ))
+    REQUIREMENTS.extend(
+        (
+            "pygments",
+            "sphinx==1.7.4",
+            "sphinxcontrib-asyncio",
+            "sphinxcontrib-napoleon",
+            "sphinxcontrib-websupport",
+        )
+    )
 
-with open(ROOT / 'README.rst', encoding='utf-8') as f:
+with open(ROOT / "README.rst", encoding="utf-8") as f:
     README = f.read()
 
-with open(ROOT / 'forklink' / '__init__.py', encoding='utf-8') as f:
-    VERSION = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE).group(1)
+with open(ROOT / "forklink" / "__init__.py", encoding="utf-8") as f:
+    VERSION = re.search(
+        r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE
+    ).group(1)
 
 
 setuptools.setup(
-    name='forklink',
-    author='EvieePy',
-    url='https://github.com/pieckenst/forklink',
+    name="forklink",
+    author="EvieePy",
+    url="https://github.com/pieckenst/forklink",
     version=VERSION,
-    packages=['forklink'],
-    license='MIT',
-    description='A versatile LavaLink wrapper for discord.py forks',
+    packages=["forklink"],
+    license="MIT",
+    description="A versatile LavaLink wrapper for discord.py forks",
     long_description=README,
     include_package_data=True,
     install_requires=REQUIREMENTS,
     classifiers=[
-        'License :: OSI Approved :: MIT License',
-        'Intended Audience :: Developers',
-        'Natural Language :: English',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
-        'Topic :: Internet',
-        'Topic :: Software Development :: Libraries',
-        'Topic :: Software Development :: Libraries :: Python Modules',
-        'Topic :: Utilities',
+        "License :: OSI Approved :: MIT License",
+        "Intended Audience :: Developers",
+        "Natural Language :: English",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Topic :: Internet",
+        "Topic :: Software Development :: Libraries",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Utilities",
     ],
-    python_requires='>=3.7'
+    python_requires=">=3.7",
 )

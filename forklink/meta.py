@@ -33,7 +33,7 @@ class forklinkMixin:
 
         for name, element in inspect.getmembers(cls):
             try:
-                element_listeners = getattr(element, '__forklink_listeners__')
+                element_listeners = getattr(element, "__forklink_listeners__")
             except AttributeError:
                 continue
 
@@ -48,7 +48,7 @@ class forklinkMixin:
 
         return self
 
-    async def on_forklink_error(self, listener,  error: Exception):
+    async def on_forklink_error(self, listener, error: Exception):
         """Event dispatched when an error is raised during mixin listener dispatch.
 
         Parameters
@@ -58,8 +58,10 @@ class forklinkMixin:
         error: Exception
             The excpetion raised when dispatching a mixin listener.
         """
-        print(f'Ignoring exception in listener {listener}:', file=sys.stderr)
-        traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
+        print(f"Ignoring exception in listener {listener}:", file=sys.stderr)
+        traceback.print_exception(
+            type(error), error, error.__traceback__, file=sys.stderr
+        )
 
     async def on_node_ready(self, node: Node):
         """Listener dispatched when a :class:`forklink.node.Node` is connected and ready.
@@ -150,9 +152,10 @@ class forklinkMixin:
         TypeError
             Listener is not a coroutine.
         """
+
         def wrapper(func):
             if not inspect.iscoroutinefunction(func):
-                raise TypeError('forklink listeners must be coroutines.')
+                raise TypeError("forklink listeners must be coroutines.")
 
             name = event or func.__name__
 
@@ -162,4 +165,5 @@ class forklinkMixin:
                 func.__forklink_listeners__ = [name]
 
             return func
+
         return wrapper
