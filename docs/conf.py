@@ -56,7 +56,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'Forklink'
+project = 'forklink'
 copyright = '2019, EvieePy'
 author = 'EvieePy'
 
@@ -118,7 +118,7 @@ html_sidebars = {
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'Forklinkdoc'
+htmlhelp_basename = 'forklinkdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -145,8 +145,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'forklink.tex', 'Forklink Documentation',
-     'Forklink', 'manual'),
+    (master_doc, 'forklink.tex', 'forklink Documentation',
+     'forklink', 'manual'),
 ]
 
 
@@ -155,7 +155,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'Forklink', 'Forklink Documentation',
+    (master_doc, 'forklink', 'forklink Documentation',
      [author], 1)
 ]
 
@@ -166,8 +166,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'Forklink', 'Forklink Documentation',
-     author, 'Forklink', 'One line description of project.',
+    (master_doc, 'forklink', 'forklink Documentation',
+     author, 'forklink', 'One line description of project.',
      'Miscellaneous'),
 ]
 

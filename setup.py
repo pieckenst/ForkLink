@@ -54,11 +54,11 @@ with open(ROOT / 'forklink' / '__init__.py', encoding='utf-8') as f:
 
 
 setuptools.setup(
-    name='ForkLink',
+    name='forklink',
     author='EvieePy',
-    url='https://github.com/pieckenst/ForkLink',
+    url='https://github.com/pieckenst/forklink',
     version=VERSION,
-    packages=['ForkLink'],
+    packages=['forklink'],
     license='MIT',
     description='A versatile LavaLink wrapper for discord.py forks',
     long_description=README,

@@ -9,7 +9,7 @@ if "%SPHINXBUILD%" == "" (
 )
 set SOURCEDIR=source
 set BUILDDIR=build
-set SPHINXPROJ=Forklink
+set SPHINXPROJ=forklink
 
 if "%1" == "" goto help
 

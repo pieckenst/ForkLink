@@ -1,5 +1,5 @@
 import disnake
-import Forklink
+import forklink
 from disnake.ext import commands
 
 
@@ -19,8 +19,8 @@ class Music(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-        if not hasattr(bot, 'Forklink'):
-            self.bot.Forklink = forklink.Client(bot=self.bot)
+        if not hasattr(bot, 'forklink'):
+            self.bot.forklink = forklink.Client(bot=self.bot)
 
         self.bot.loop.create_task(self.start_nodes())
 

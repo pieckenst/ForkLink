@@ -1,4 +1,4 @@
-__title__ = 'Forklink'
+__title__ = 'forklink'
 __author__ = 'EvieePy'
 __license__ = 'MIT'
 __copyright__ = 'Copyright 2019-2021 (c) PythonistaGuild'
@@ -10,5 +10,5 @@ from .eqs import *
 from .events import *
 from .player import *
 from .node import Node
-from .meta import ForklinkMixin
+from .meta import forklinkMixin
 from .websocket import WebSocket

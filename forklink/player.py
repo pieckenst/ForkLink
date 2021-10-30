@@ -37,7 +37,7 @@ __log__ = logging.getLogger(__name__)
 
 
 class Track:
-    """Forklink Track object.
+    """forklink Track object.
 
     Attributes
     ------------
@@ -125,7 +125,7 @@ class TrackPlaylist:
 
 
 class Player:
-    """Forklink Player class.
+    """forklink Player class.
 
     Attributes
     ------------
@@ -295,7 +295,7 @@ class Player:
     async def play(self, track: Track, *, replace: bool = True, start: int = 0, end: int = 0) -> None:
         """|coro|
 
-        Play a Forklink Track.
+        Play a forklink Track.
 
         Parameters
         ------------
@@ -440,9 +440,9 @@ class Player:
             node = client.get_node(identifier)
 
             if not node:
-                raise ForklinkException(f'No Nodes matching identifier:: {identifier}')
+                raise forklinkException(f'No Nodes matching identifier:: {identifier}')
             elif node == self.node:
-                raise ForklinkException('Node identifiers must not be the same while changing.')
+                raise forklinkException('Node identifiers must not be the same while changing.')
         else:
             self.node.close()
             node = None
@@ -458,7 +458,7 @@ class Player:
 
             if not node:
                 self.node.open()
-                raise ForklinkException('No Nodes available for changeover.')
+                raise forklinkException('No Nodes available for changeover.')
 
         self.node.open()
 

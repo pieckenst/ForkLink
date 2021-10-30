@@ -22,25 +22,25 @@ SOFTWARE.
 """
 
 
-class ForklinkException(Exception):
-    """Base Forklink Exception."""
+class forklinkException(Exception):
+    """Base forklink Exception."""
 
 
-class NodeOccupied(ForklinkException):
+class NodeOccupied(forklinkException):
     """Exception raised when node identifiers conflict."""
 
 
-class InvalidIDProvided(ForklinkException):
+class InvalidIDProvided(forklinkException):
     """Exception raised when an invalid ID is passed somewhere in forklink."""
 
 
-class ZeroConnectedNodes(ForklinkException):
+class ZeroConnectedNodes(forklinkException):
     """Exception raised when an operation is attempted with nodes, when there are None connected."""
 
 
-class AuthorizationFailure(ForklinkException):
+class AuthorizationFailure(forklinkException):
     """Exception raised when an invalid password is provided toa node."""
 
 
-class BuildTrackError(ForklinkException):
+class BuildTrackError(forklinkException):
     """Exception raised when a track is failed to be decoded and re-built."""

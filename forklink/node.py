@@ -38,7 +38,7 @@ __log__ = logging.getLogger(__name__)
 
 
 class Node:
-    """A Forklink Node instance.
+    """A forklink Node instance.
 
     .. warning::
         You should not create :class:`Node` objects manually. Instead you should use, :func:`Client.initiate_node`.
@@ -263,11 +263,11 @@ class Node:
 
         Raises
         --------
-        ForklinkException
+        forklinkException
             The hook provided was not a valid callable.
         """
         if not callable(func):
-            raise ForklinkException('Node hook must be a callable.')
+            raise forklinkException('Node hook must be a callable.')
 
         self.hook = func
 

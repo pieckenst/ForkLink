@@ -3,7 +3,7 @@
 
 # You can set these variables from the command line.
 SPHINXBUILD   = sphinx-build
-SPHINXPROJ    = Forklink
+SPHINXPROJ    = forklink
 SOURCEDIR     = source
 BUILDDIR      = build
 

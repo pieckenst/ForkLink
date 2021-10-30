@@ -6,8 +6,8 @@ from .events import *
 from .node import Node
 
 
-class ForklinkMixin:
-    """Forklink Mixin class.
+class forklinkMixin:
+    """forklink Mixin class.
 
     .. warning::
         You must use this class in conjuction with a discord.py `commands.Cog`.
@@ -16,8 +16,8 @@ class ForklinkMixin:
     ---------
     .. code:: py
 
-        # ForklinkMixin must be used alongside a discord.py cog.
-        class MusicCog(commands.Cog, forklink.ForklinkMixin):
+        # forklinkMixin must be used alongside a discord.py cog.
+        class MusicCog(commands.Cog, forklink.forklinkMixin):
 
             @forklink.forklink.listener()
             async def on_node_ready(self, node: forklink.Node):
@@ -33,7 +33,7 @@ class ForklinkMixin:
 
         for name, element in inspect.getmembers(cls):
             try:
-                element_listeners = getattr(element, '__Forklink_listeners__')
+                element_listeners = getattr(element, '__forklink_listeners__')
             except AttributeError:
                 continue
 
@@ -44,11 +44,11 @@ class ForklinkMixin:
                     listeners[listener] = [element.__name__]
 
         self = super().__new__(cls)
-        cls.__Forklink_listeners__ = listeners
+        cls.__forklink_listeners__ = listeners
 
         return self
 
-    async def on_Forklink_error(self, listener,  error: Exception):
+    async def on_forklink_error(self, listener,  error: Exception):
         """Event dispatched when an error is raised during mixin listener dispatch.
 
         Parameters
@@ -127,10 +127,10 @@ class ForklinkMixin:
 
     @staticmethod
     def listener(event: str = None):
-        """Decorator that adds a coroutine as a Forklink event listener.
+        """Decorator that adds a coroutine as a forklink event listener.
 
         .. note::
-            This must be used within a :class:`forklink.ForklinkMixin` subclass in order to work.
+            This must be used within a :class:`forklink.forklinkMixin` subclass in order to work.
 
         Parameters
         ------------
@@ -141,7 +141,7 @@ class ForklinkMixin:
         ---------
         .. code:: py
 
-                @forklink.ForklinkMixin.listener(event="on_node_ready")
+                @forklink.forklinkMixin.listener(event="on_node_ready")
                 async def node_ready_event(node):
                     print(f'Node {node.indentifier} ready!')
 
@@ -152,14 +152,14 @@ class ForklinkMixin:
         """
         def wrapper(func):
             if not inspect.iscoroutinefunction(func):
-                raise TypeError('Forklink listeners must be coroutines.')
+                raise TypeError('forklink listeners must be coroutines.')
 
             name = event or func.__name__
 
             try:
-                func.__Forklink_listeners__.append(name)
+                func.__forklink_listeners__.append(name)
             except AttributeError:
-                func.__Forklink_listeners__ = [name]
+                func.__forklink_listeners__ = [name]
 
             return func
         return wrapper

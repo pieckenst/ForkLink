@@ -1,11 +1,11 @@
 """
-Forklink Playlist Example.
+forklink Playlist Example.
 
 Please understand Music bots are complex, and that even this basic example can be daunting to a beginner.
 For this reason it's highly advised you familiarize yourself with disnake.py, python and asyncio, BEFORE
 you attempt to write a music bot.
 
-This example makes use of: Python 3.7, Forklink(https://github.com/EvieePy/Forklink) and LavaLink.
+This example makes use of: Python 3.7, forklink(https://github.com/EvieePy/forklink) and LavaLink.
 
 This is a very basic playlist example, which allows per guild playback of unique queues.
 
@@ -25,7 +25,7 @@ import itertools
 import re
 import sys
 import traceback
-import Forklink
+import forklink
 from disnake.ext import commands
 from typing import Union
 
@@ -84,8 +84,8 @@ class Music(commands.Cog):
         self.bot = bot
         self.controllers = {}
 
-        if not hasattr(bot, 'Forklink'):
-            self.bot.Forklink = forklink.Client(bot=self.bot)
+        if not hasattr(bot, 'forklink'):
+            self.bot.forklink = forklink.Client(bot=self.bot)
 
         self.bot.loop.create_task(self.start_nodes())
 
@@ -275,7 +275,7 @@ class Music(commands.Cog):
         free = humanize.naturalsize(node.stats.memory_free)
         cpu = node.stats.cpu_cores
 
-        fmt = f'**Forklink:** `{forklink.__version__}`\n\n' \
+        fmt = f'**forklink:** `{forklink.__version__}`\n\n' \
               f'Connected to `{len(self.bot.forklink.nodes)}` nodes.\n' \
               f'Best available Node `{self.bot.forklink.get_best_node().__repr__()}`\n' \
               f'`{len(self.bot.forklink.players)}` players are distributed on nodes.\n' \

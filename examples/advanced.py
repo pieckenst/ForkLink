@@ -23,7 +23,7 @@ DEALINGS IN THE SOFTWARE.
 This example uses the following which must be installed prior to running:
 
     - disnake.py version >= 1.7.1 (pip install -U disnake.py)
-    - Forklink version >= 0.5.1 (pip install -U Forklink)
+    - forklink version >= 0.5.1 (pip install -U forklink)
     - menus version >= 1.0.0-a (pip install -U git+https://github.com/EQUENOS/disnake-ext-menus.git)
     - Python 3.7+
 --------------------------------------------------------------------------------
@@ -37,7 +37,7 @@ import math
 import random
 import re
 import typing
-import Forklink
+import forklink
 from disnake.ext import commands, menus
 
 # URL matching REGEX...
@@ -55,7 +55,7 @@ class IncorrectChannelError(commands.CommandError):
 
 
 class Track(forklink.Track):
-    """Forklink Track object with a requester attribute."""
+    """forklink Track object with a requester attribute."""
 
     __slots__ = ('requester', )
 
@@ -66,7 +66,7 @@ class Track(forklink.Track):
 
 
 class Player(forklink.Player):
-    """Custom Forklink Player class."""
+    """Custom forklink Player class."""
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -320,14 +320,14 @@ class PaginatorSource(menus.ListPageSource):
         return True
 
 
-class Music(commands.Cog, forklink.ForklinkMixin):
+class Music(commands.Cog, forklink.forklinkMixin):
     """Music Cog."""
 
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-        if not hasattr(bot, 'Forklink'):
-            bot.Forklink = forklink.Client(bot=bot)
+        if not hasattr(bot, 'forklink'):
+            bot.forklink = forklink.Client(bot=bot)
 
         bot.loop.create_task(self.start_nodes())
 
@@ -352,13 +352,13 @@ class Music(commands.Cog, forklink.ForklinkMixin):
         for n in nodes.values():
             await self.bot.forklink.initiate_node(**n)
 
-    @forklink.ForklinkMixin.listener()
+    @forklink.forklinkMixin.listener()
     async def on_node_ready(self, node: forklink.Node):
         print(f'Node {node.identifier} is ready!')
 
-    @forklink.ForklinkMixin.listener('on_track_stuck')
-    @forklink.ForklinkMixin.listener('on_track_end')
-    @forklink.ForklinkMixin.listener('on_track_exception')
+    @forklink.forklinkMixin.listener('on_track_stuck')
+    @forklink.forklinkMixin.listener('on_track_end')
+    @forklink.forklinkMixin.listener('on_track_exception')
     async def on_player_stop(self, node: forklink.Node, payload):
         await payload.player.do_next()
 

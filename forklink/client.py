@@ -37,7 +37,7 @@ __log__ = logging.getLogger(__name__)
 
 
 class Client:
-    """The main Forklink client."""
+    """The main forklink client."""
 
     def __new__(cls, *args, **kwargs):
         cls.__qualname__ = 'forklink.Client'
@@ -46,7 +46,7 @@ class Client:
             bot = kwargs['bot']
         except KeyError:
             msg = 'forklink.Client: bot is a required keyword only argument which is missing.'
-            raise ForklinkException(msg)
+            raise forklinkException(msg)
 
         if not isinstance(bot, (commands.Bot, commands.AutoShardedBot)):
             msg = f'forklink.Client expected type <commands.Bot or commands.AutoShardedBot> not {type(bot)}'
@@ -98,12 +98,12 @@ class Client:
 
     @property
     def players(self) -> dict:
-        """Return the Forklink clients current players across all nodes.
+        """Return the forklink clients current players across all nodes.
 
         Returns
         ---------
         dict:
-            A dict of the current Forklink players.
+            A dict of the current forklink players.
         """
         return self._get_players()
 
@@ -112,7 +112,7 @@ class Client:
 
         for cog in self.bot.cogs.values():
             try:
-                listeners = cog.__Forklink_listeners__[name]
+                listeners = cog.__forklink_listeners__[name]
             except (AttributeError, KeyError):
                 continue
 
@@ -131,7 +131,7 @@ class Client:
 
     def _future_callback(self, cog, listener, fut):
         if fut.exception():
-            self.loop.create_task(cog.on_Forklink_error(listener, fut.exception()))
+            self.loop.create_task(cog.on_forklink_error(listener, fut.exception()))
 
     async def get_tracks(self, query: str, *, retry_on_failure: bool = True) -> Optional[list]:
         """|coro|
