@@ -384,7 +384,7 @@ class Client:
         password: str
             The password to authenticate on the server.
         region: str
-            The region as a valid disnake.py guild.region to associate the :class:`forklink.node.Node` with.
+            The region as a valid discord.py guild.region to associate the :class:`forklink.node.Node` with.
         identifier: str
             A unique identifier for the :class:`forklink.node.Node`
         shard_id: Optional[int]

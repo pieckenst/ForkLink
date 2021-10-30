@@ -1,1 +1,1 @@
-git+https://github.com/EQUENOS/disnake
+git+https://github.com/EQUENOS/discord

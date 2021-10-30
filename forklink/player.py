@@ -23,8 +23,8 @@ SOFTWARE.
 import logging
 import time
 import re
-from disnake.ext import commands
-from disnake.gateway import DiscordWebSocket
+from discord.ext import commands
+from discord.gateway import DiscordWebSocket
 from typing import Optional, Union
 
 from .errors import *
@@ -129,8 +129,8 @@ class Player:
 
     Attributes
     ------------
-    bot: Union[disnake.ext.commands.Bot, disnake.ext.commands.AutoShardedBot]
-        The disnake Bot instance.
+    bot: Union[discord.ext.commands.Bot, discord.ext.commands.AutoShardedBot]
+        The discord Bot instance.
     guild_id: int
         The guild ID the player is connected to.
     node: :class:`forklink.node.Node`
@@ -258,7 +258,7 @@ class Player:
     async def connect(self, channel_id: int, self_deaf: bool = False):
         """|coro|
 
-        Connect to a disnake Voice Channel.
+        Connect to a discord Voice Channel.
 
         Parameters
         ------------
@@ -278,7 +278,7 @@ class Player:
     async def disconnect(self, *, force: bool = False) -> None:
         """|coro|
 
-        Disconnect from a disnake Voice Channel.
+        Disconnect from a discord Voice Channel.
         """
         guild = self.bot.get_guild(self.guild_id)
         if not guild and force is True:

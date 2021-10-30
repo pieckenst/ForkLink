@@ -1,6 +1,6 @@
-import disnake
+import discord
 import forklink
-from disnake.ext import commands
+from discord.ext import commands
 
 
 class Bot(commands.Bot):
@@ -28,7 +28,7 @@ class Music(commands.Cog):
         await self.bot.wait_until_ready()
 
         # Initiate our nodes. For this example we will use one server.
-        # Region should be a disnake.py guild.region e.g sydney or us_central (Though this is not technically required)
+        # Region should be a discord.py guild.region e.g sydney or us_central (Though this is not technically required)
         await self.bot.forklink.initiate_node(host='0.0.0.0',
                                               port=2333,
                                               rest_uri='http://0.0.0.0:2333',
@@ -37,12 +37,12 @@ class Music(commands.Cog):
                                               region='us_central')
 
     @commands.command(name='connect')
-    async def connect_(self, ctx, *, channel: disnake.VoiceChannel = None):
+    async def connect_(self, ctx, *, channel: discord.VoiceChannel = None):
         if not channel:
             try:
                 channel = ctx.author.voice.channel
             except AttributeError:
-                raise disnake.disnakeException('No channel to join. Please either specify a valid channel or join one.')
+                raise discord.discordException('No channel to join. Please either specify a valid channel or join one.')
 
         player = self.bot.forklink.get_player(ctx.guild.id)
         await ctx.send(f'Connecting to **`{channel.name}`**')

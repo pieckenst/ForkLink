@@ -22,9 +22,9 @@ DEALINGS IN THE SOFTWARE.
 -------------------------------------------------------------------------------
 This example uses the following which must be installed prior to running:
 
-    - disnake.py version >= 1.7.1 (pip install -U disnake.py)
+    - discord.py version >= 1.7.1 (pip install -U discord.py)
     - forklink version >= 0.5.1 (pip install -U forklink)
-    - menus version >= 1.0.0-a (pip install -U git+https://github.com/EQUENOS/disnake-ext-menus.git)
+    - menus version >= 1.0.0-a (pip install -U git+https://github.com/EQUENOS/discord-ext-menus.git)
     - Python 3.7+
 --------------------------------------------------------------------------------
 """
@@ -32,13 +32,13 @@ import asyncio
 import async_timeout
 import copy
 import datetime
-import disnake
+import discord
 import math
 import random
 import re
 import typing
 import forklink
-from disnake.ext import commands, menus
+from discord.ext import commands, menus
 
 # URL matching REGEX...
 URL_REG = re.compile(r'https?://(?:www\.)?.+')
@@ -73,7 +73,7 @@ class Player(forklink.Player):
 
         self.context: commands.Context = kwargs.get('context', None)
         if self.context:
-            self.dj: disnake.Member = self.context.author
+            self.dj: discord.Member = self.context.author
 
         self.queue = asyncio.Queue()
         self.controller = None
@@ -126,7 +126,7 @@ class Player(forklink.Player):
         elif not await self.is_position_fresh():
             try:
                 await self.controller.message.delete()
-            except disnake.HTTPException:
+            except discord.HTTPException:
                 pass
 
             self.controller.stop()
@@ -140,7 +140,7 @@ class Player(forklink.Player):
 
         self.updating = False
 
-    def build_embed(self) -> typing.Optional[disnake.Embed]:
+    def build_embed(self) -> typing.Optional[discord.Embed]:
         """Method which builds our players controller embed."""
         track = self.current
         if not track:
@@ -149,7 +149,7 @@ class Player(forklink.Player):
         channel = self.bot.get_channel(int(self.channel_id))
         qsize = self.queue.qsize()
 
-        embed = disnake.Embed(title=f'Music Controller | {channel.name}', colour=0xebb145)
+        embed = discord.Embed(title=f'Music Controller | {channel.name}', colour=0xebb145)
         embed.description = f'Now Playing:\n**`{track.title}`**\n\n'
         embed.set_thumbnail(url=track.thumb)
 
@@ -168,7 +168,7 @@ class Player(forklink.Player):
             async for message in self.context.channel.history(limit=5):
                 if message.id == self.controller.message.id:
                     return True
-        except (disnake.HTTPException, AttributeError):
+        except (discord.HTTPException, AttributeError):
             return False
 
         return False
@@ -177,7 +177,7 @@ class Player(forklink.Player):
         """Clear internal states, remove player controller and disconnect."""
         try:
             await self.controller.message.delete()
-        except disnake.HTTPException:
+        except discord.HTTPException:
             pass
 
         self.controller.stop()
@@ -191,20 +191,20 @@ class Player(forklink.Player):
 class InteractiveController(menus.Menu):
     """The Players interactive controller menu class."""
 
-    def __init__(self, *, embed: disnake.Embed, player: Player):
+    def __init__(self, *, embed: discord.Embed, player: Player):
         super().__init__(timeout=None)
 
         self.embed = embed
         self.player = player
 
-    def update_context(self, payload: disnake.RawReactionActionEvent):
+    def update_context(self, payload: discord.RawReactionActionEvent):
         """Update our context with the user who reacted."""
         ctx = copy.copy(self.ctx)
         ctx.author = payload.member
 
         return ctx
 
-    def reaction_check(self, payload: disnake.RawReactionActionEvent):
+    def reaction_check(self, payload: discord.RawReactionActionEvent):
         if payload.event_type == 'REACTION_REMOVE':
             return False
 
@@ -219,11 +219,11 @@ class InteractiveController(menus.Menu):
 
         return payload.emoji in self.buttons
 
-    async def send_initial_message(self, ctx: commands.Context, channel: disnake.TextChannel) -> disnake.Message:
+    async def send_initial_message(self, ctx: commands.Context, channel: discord.TextChannel) -> discord.Message:
         return await channel.send(embed=self.embed)
 
     @menus.button(emoji='\u25B6')
-    async def resume_command(self, payload: disnake.RawReactionActionEvent):
+    async def resume_command(self, payload: discord.RawReactionActionEvent):
         """Resume button."""
         ctx = self.update_context(payload)
 
@@ -233,7 +233,7 @@ class InteractiveController(menus.Menu):
         await self.bot.invoke(ctx)
 
     @menus.button(emoji='\u23F8')
-    async def pause_command(self, payload: disnake.RawReactionActionEvent):
+    async def pause_command(self, payload: discord.RawReactionActionEvent):
         """Pause button"""
         ctx = self.update_context(payload)
 
@@ -243,7 +243,7 @@ class InteractiveController(menus.Menu):
         await self.bot.invoke(ctx)
 
     @menus.button(emoji='\u23F9')
-    async def stop_command(self, payload: disnake.RawReactionActionEvent):
+    async def stop_command(self, payload: discord.RawReactionActionEvent):
         """Stop button."""
         ctx = self.update_context(payload)
 
@@ -253,7 +253,7 @@ class InteractiveController(menus.Menu):
         await self.bot.invoke(ctx)
 
     @menus.button(emoji='\u23ED')
-    async def skip_command(self, payload: disnake.RawReactionActionEvent):
+    async def skip_command(self, payload: discord.RawReactionActionEvent):
         """Skip button."""
         ctx = self.update_context(payload)
 
@@ -263,7 +263,7 @@ class InteractiveController(menus.Menu):
         await self.bot.invoke(ctx)
 
     @menus.button(emoji='\U0001F500')
-    async def shuffle_command(self, payload: disnake.RawReactionActionEvent):
+    async def shuffle_command(self, payload: discord.RawReactionActionEvent):
         """Shuffle button."""
         ctx = self.update_context(payload)
 
@@ -273,7 +273,7 @@ class InteractiveController(menus.Menu):
         await self.bot.invoke(ctx)
 
     @menus.button(emoji='\u2795')
-    async def volup_command(self, payload: disnake.RawReactionActionEvent):
+    async def volup_command(self, payload: discord.RawReactionActionEvent):
         """Volume up button"""
         ctx = self.update_context(payload)
 
@@ -283,7 +283,7 @@ class InteractiveController(menus.Menu):
         await self.bot.invoke(ctx)
 
     @menus.button(emoji='\u2796')
-    async def voldown_command(self, payload: disnake.RawReactionActionEvent):
+    async def voldown_command(self, payload: discord.RawReactionActionEvent):
         """Volume down button."""
         ctx = self.update_context(payload)
 
@@ -293,7 +293,7 @@ class InteractiveController(menus.Menu):
         await self.bot.invoke(ctx)
 
     @menus.button(emoji='\U0001F1F6')
-    async def queue_command(self, payload: disnake.RawReactionActionEvent):
+    async def queue_command(self, payload: discord.RawReactionActionEvent):
         """Player queue button."""
         ctx = self.update_context(payload)
 
@@ -310,7 +310,7 @@ class PaginatorSource(menus.ListPageSource):
         super().__init__(entries, per_page=per_page)
 
     async def format_page(self, menu: menus.Menu, page):
-        embed = disnake.Embed(title='Coming Up...', colour=0x4f0321)
+        embed = discord.Embed(title='Coming Up...', colour=0x4f0321)
         embed.description = '\n'.join(f'`{index}. {title}`' for index, title in enumerate(page, 1))
 
         return embed
@@ -363,7 +363,7 @@ class Music(commands.Cog, forklink.forklinkMixin):
         await payload.player.do_next()
 
     @commands.Cog.listener()
-    async def on_voice_state_update(self, member: disnake.Member, before: disnake.VoiceState, after: disnake.VoiceState):
+    async def on_voice_state_update(self, member: discord.Member, before: discord.VoiceState, after: discord.VoiceState):
         if member.bot:
             return
 
@@ -450,7 +450,7 @@ class Music(commands.Cog, forklink.forklinkMixin):
         return player.dj == ctx.author or ctx.author.guild_permissions.kick_members
 
     @commands.command()
-    async def connect(self, ctx: commands.Context, *, channel: typing.Union[disnake.VoiceChannel, disnake.StageChannel] = None):
+    async def connect(self, ctx: commands.Context, *, channel: typing.Union[discord.VoiceChannel, discord.StageChannel] = None):
         """Connect to a voice channel."""
         player: Player = self.bot.forklink.get_player(guild_id=ctx.guild.id, cls=Player, context=ctx)
 
@@ -721,7 +721,7 @@ class Music(commands.Cog, forklink.forklinkMixin):
         await player.invoke_controller()
 
     @commands.command(aliases=['swap'])
-    async def swap_dj(self, ctx: commands.Context, *, member: disnake.Member = None):
+    async def swap_dj(self, ctx: commands.Context, *, member: discord.Member = None):
         """Swap the current DJ to another member in the voice channel."""
         player: Player = self.bot.forklink.get_player(guild_id=ctx.guild.id, cls=Player, context=ctx)
 

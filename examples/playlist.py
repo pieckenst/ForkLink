@@ -2,7 +2,7 @@
 forklink Playlist Example.
 
 Please understand Music bots are complex, and that even this basic example can be daunting to a beginner.
-For this reason it's highly advised you familiarize yourself with disnake.py, python and asyncio, BEFORE
+For this reason it's highly advised you familiarize yourself with discord.py, python and asyncio, BEFORE
 you attempt to write a music bot.
 
 This example makes use of: Python 3.7, forklink(https://github.com/EvieePy/forklink) and LavaLink.
@@ -15,18 +15,18 @@ your own permissions and usage logic for commands.
 e.g You might like to implement a vote before skipping the song or only allow admins to stop the player.
 
 Music bots require lots of work, and tuning. Goodluck.
-If you find any bugs feel free to ping me on disnake. @Eviee#0666
+If you find any bugs feel free to ping me on discord. @Eviee#0666
 """
 import asyncio
 import datetime
-import disnake
+import discord
 import humanize
 import itertools
 import re
 import sys
 import traceback
 import forklink
-from disnake.ext import commands
+from discord.ext import commands
 from typing import Union
 
 
@@ -93,7 +93,7 @@ class Music(commands.Cog):
         await self.bot.wait_until_ready()
 
         # Initiate our nodes. For this example we will use one server.
-        # Region should be a disnake.py guild.region e.g sydney or us_central (Though this is not technically required)
+        # Region should be a discord.py guild.region e.g sydney or us_central (Though this is not technically required)
         node = await self.bot.forklink.initiate_node(host='x.x.x.x',
                                                      port=2333,
                                                      rest_uri='http://x.x.x.x:2333',
@@ -135,20 +135,20 @@ class Music(commands.Cog):
         if isinstance(error, commands.NoPrivateMessage):
             try:
                 return await ctx.send('This command can not be used in Private Messages.')
-            except disnake.HTTPException:
+            except discord.HTTPException:
                 pass
 
         print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
         traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
 
     @commands.command(name='connect')
-    async def connect_(self, ctx, *, channel: disnake.VoiceChannel=None):
+    async def connect_(self, ctx, *, channel: discord.VoiceChannel=None):
         """Connect to a valid voice channel."""
         if not channel:
             try:
                 channel = ctx.author.voice.channel
             except AttributeError:
-                raise disnake.disnakeException('No channel to join. Please either specify a valid channel or join one.')
+                raise discord.discordException('No channel to join. Please either specify a valid channel or join one.')
 
         player = self.bot.forklink.get_player(ctx.guild.id)
         await ctx.send(f'Connecting to **`{channel.name}`**', delete_after=15)
@@ -246,7 +246,7 @@ class Music(commands.Cog):
         upcoming = list(itertools.islice(controller.queue._queue, 0, 5))
 
         fmt = '\n'.join(f'**`{str(song)}`**' for song in upcoming)
-        embed = disnake.Embed(title=f'Upcoming - Next {len(upcoming)}', description=fmt)
+        embed = discord.Embed(title=f'Upcoming - Next {len(upcoming)}', description=fmt)
 
         await ctx.send(embed=embed)
 
