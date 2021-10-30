@@ -10,7 +10,7 @@
 .. image:: https://img.shields.io/github/license/EvieePy/forklinksvg
     :target: LICENSE
 
-A robust and powerful Lavalink wrapper for `discord`_!
+A robust and powerful Lavalink wrapper for discord.py forks that are not disnake( separate repository for disnake just to not have loads of branches)!
 
 Documentation
 ---------------------------
@@ -18,13 +18,13 @@ Documentation
 
 Support
 ---------------------------
-No support is provided for this specific fork of ForkLink
+No support is provided for this specific fork of WaveLink
 
 
 
 Installation
 ---------------------------
-The following commands are currently the valid ways of installing this ForkLink fork.
+The following commands are currently the valid ways of installing this WaveLink fork.
 
 **ForkLink requires Python 3.7+**
 
