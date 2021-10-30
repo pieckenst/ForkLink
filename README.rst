@@ -32,14 +32,13 @@ The following commands are currently the valid ways of installing this WaveLink 
 
 .. code:: sh
 
-    py -3.7 -m pip install -U git+https://github.com/pieckenst/forklinkgit
+    py -3.7 -m pip install -U git+https://github.com/pieckenst/forklink.git
 
 **Linux**
 
 .. code:: sh
 
-    python3.7 -m pip install -U git+https://github.com/pieckenst/forklinkgit
-
+    python3.7 -m pip install -U git+https://github.com/pieckenst/forklink.git
 Getting Started
 ----------------------------
 
