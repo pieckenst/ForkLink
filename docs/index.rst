@@ -8,4 +8,4 @@ Welcome to Forklinks's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   Forklink
+   forklink
